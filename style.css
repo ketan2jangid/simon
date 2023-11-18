@@ -1,0 +1,41 @@
+body {
+    background-color: rgb(3, 18, 49);
+    padding: 50px;
+    text-align: center;
+}
+
+button {
+    border: 10px solid black;
+    border-radius: 30px;
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+}
+
+.buttons-block {
+    padding: 20px;
+}
+
+.heading {
+    color: burlywood;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 5rem;
+    font-weight: bolder;
+    margin: 20px 10px 50px 10px;
+}
+
+.b1 {
+  background-color: green;
+}
+
+.b2 {
+    background-color: red;
+}
+
+.b3 {
+    background-color: yellow;
+}
+
+.b4 {
+    background-color: blue;
+}
