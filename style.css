@@ -24,23 +24,22 @@ button {
     margin: 20px 10px 50px 10px;
 }
 
-.pressed-button {
-    background-color: grey;
+.button-shadow {
     box-shadow: white 0px 0px 15px;
 }
 
-.b1 {
+#green {
     background-color: green;
 }
 
-.b2 {
+#red {
     background-color: red;
 }
 
-.b3 {
+#yellow {
     background-color: yellow;
 }
 
-.b4 {
+#blue {
     background-color: blue;
 }
