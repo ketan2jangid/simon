@@ -14,8 +14,6 @@ var ind = 0;
 function buttonResponse() {
     var buttonPressed = $(this).attr('id');
 
-    // console.log(userClickedPattern);
-
     $('#' + buttonPressed).addClass("button-shadow");
     $('#' + buttonPressed).css('background-color', 'grey');
 
@@ -64,10 +62,10 @@ function validateSequence(currentLevel) {
     console.log(currentLevel, userClickedPattern[currentLevel], gamePattern[currentLevel]);
 
     if(userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
-        console.log('success');
+        // console.log('success');
         ind++;
     } else {
-        console.log('failed');
+        // console.log('failed');
 
         resetAll();
         return;
