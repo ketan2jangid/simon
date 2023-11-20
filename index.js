@@ -2,16 +2,17 @@ var buttonColors = ["green", "red", "yellow", "blue"];
 var gamePattern = [];
 
 var userClickedPattern = [];
-var currentLevel = 0;
+var level = 0;
+
+var keysActive = true;
 
 $("button").click(buttonResponse);
 
 $(document).on('keypress', () => nextSequence());
 
+var ind = 0;
 function buttonResponse() {
     var buttonPressed = $(this).attr('id');
-
-    userClickedPattern.push(buttonPressed);
 
     // console.log(userClickedPattern);
 
@@ -27,53 +28,87 @@ function buttonResponse() {
 
     userClickedPattern.push(buttonPressed);
 
-    validateSequence(userClickedPattern.length - 1);
+    validateSequence(ind);
 
-    playSound(buttonPressed);
-    
+    playSound(buttonPressed);    
 }
 
 
 function nextSequence() {
-    let randomNum = Math.floor(4*Math.random());
+    if(keysActive) {
+        var randomNum = Math.floor(4*Math.random());
 
-    let randomChosenColor = buttonColors[randomNum];
+        var randomChosenColor = buttonColors[randomNum];
 
-    $('#' + randomChosenColor).animate({opacity:0.3});
+        $('#' + randomChosenColor).animate({opacity:0.3});
+
+        setTimeout(
+            function() {
+                $('#' + randomChosenColor).animate({opacity: 1});
+            }, 100
+        );
+
+        playSound(randomChosenColor);
+
+        gamePattern.push(randomChosenColor);
+
+        level++;
+        
+        $(".heading").text('Level ' + level);
+
+        keysActive = false;
+    }
+}
+
+function validateSequence(currentLevel) {
+    console.log(currentLevel, userClickedPattern[currentLevel], gamePattern[currentLevel]);
+
+    if(userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+        console.log('success');
+        ind++;
+    } else {
+        console.log('failed');
+
+        resetAll();
+        return;
+    }
+
+    console.log(userClickedPattern.length, gamePattern.length);
+
+    if(userClickedPattern.length === gamePattern.length) {
+        console.log("level up!");
+
+        ind = 0;
+        userClickedPattern = [];
+
+        keysActive = true;
+
+        setTimeout(
+            () => nextSequence(),
+            1000,
+        )
+    }
+}
+
+function resetAll() {
+    userClickedPattern = [];
+    gamePattern = [];
+
+    ind = 0;
+    level = 0;
+    keysActive = true;
+
+    $(".heading").text("Game over! Press any key to start");
+
+    $("body").css("background-color", "red");
 
     setTimeout(
         function() {
-            $('#' + randomChosenColor).animate({opacity: 1});
-        }, 100
-    );
+            $("body").css("background-color", "rgb(3, 18, 49)");
 
-    playSound(randomChosenColor);
-
-    gamePattern.push(randomChosenColor);
-
-    currentLevel++;
-
-    $(".heading").text('Level ' + currentLevel);
-
-    validateSequence(currentLevel);
-}
-
-function validateSequence(level) {
-    var flag = true;
-
-    for(var i=0; i<=level; i++) {
-        if(userClickedPattern[i] !== gamePattern[i]){
-            console.log("game over");
-
-            flag = false;
-            break;
-        }
-    }
-
-    if(flag) {
-        console.log("success");
-    }
-
+            playSound('wrong');
+        }, 200
+    )
 }
 
 function playSound(button) {
